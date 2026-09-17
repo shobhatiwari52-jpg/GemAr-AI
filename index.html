@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>GemAr AI - Gemini 3.6 Flash Powered Workspace & Canvas Engine built by Atharva Kumar</title>
+    <meta name="description" content="Experience GemAr AI, an advanced web application created by Atharva Kumar and powered by Gemini 3.6 Flash. Features interactive Canvas HTML app building, instant visual generation, and high-speed neural execution.">
+    <meta name="keywords" content="Gemini 3.6, Gemini 3.6 Flash, Gemini 3.6 AI, GemAr AI, GemAr Neural Network, Gemini 3.6 Canvas Engine, Gemini 3.6 Web App, Powered by Gemini 3.6">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Atharva Kumar">
+
+    <!-- Machine-Readable Entity Schema for Google -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "GemAr AI",
+  "operatingSystem": "All",
+  "applicationCategory": "DeveloperApplication",
+  "url": "https://gemar-ai.netlify.app/",
+  "description": "High-speed queries, calculations, code execution, and interactive canvas app generation powered by Gemini 3.6 Flash and created by Commander Atharva Kumar in India.",
+  "author": {
+    "@type": "Person",
+    "name": "Commander Atharva Kumar"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "INR"
+  }
+}
+</script>
+
+    <meta name="google-site-verification" content="G4lKsljyU3jvgs6ls1RTprvLciNk0J3L7aQ1Elitj9U" />
+
+    <meta property="og:title" content="GemAr AI - Powered by Gemini 3.6 Flash">
+    <meta property="og:description" content="Build interactive HTML canvas apps and run queries instantly with the Gemini 3.6 Flash neural engine.">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: radial-gradient(circle at top right, #1a1c2e, #0d0e15 60%);
+            color: #e2e8f0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .chat-container {
+            width: 90%;
+            max-width: 900px;
+            height: 90vh;
+            background: rgba(22, 27, 34, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(88, 166, 255, 0.15);
+            position: relative;
+        }
+        .header {
+            padding: 18px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px 20px 0 0;
+        }
+        .brand-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            filter: drop-shadow(0 0 8px rgba(121, 192, 255, 0.6));
+        }
+        .header-title h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #79c0ff, #d2a8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        .header-title p {
+            font-size: 0.75rem;
+            color: #8b949e;
+            margin-top: 3px;
+        }
+        .info-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            color: #79c0ff;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .info-btn:hover {
+            background: rgba(88, 166, 255, 0.2);
+            color: #fff;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scroll-behavior: smooth;
+        }
+        .chat-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-box::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .message {
+            max-width: 80%;
+            padding: 14px 18px;
+            border-radius: 16px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .user-msg {
+            background: linear-gradient(135deg, #238636, #1e7e34);
+            color: #ffffff;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            box-shadow: 0 4px 12px rgba(35, 134, 54, 0.3);
+        }
+        .ai-msg {
+            background: rgba(33, 38, 45, 0.8);
+            color: #e6edf3;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .ai-image {
+            max-width: 100%;
+            border-radius: 12px;
+            margin-top: 12px;
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+        .preview-btn {
+            display: inline-block;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #238636, #2ea043);
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .preview-btn:hover {
+            transform: scale(1.03);
+        }
+        .tools-menu {
+            display: none;
+            position: absolute;
+            bottom: 85px;
+            left: 20px;
+            background: rgba(22, 27, 34, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            border-radius: 14px;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            width: 260px;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .tool-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #c9d1d9;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tool-option:hover {
+            background: rgba(88, 166, 255, 0.15);
+            color: #79c0ff;
+            border-color: #58a6ff;
+        }
+        .input-area {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            gap: 10px;
+            border-radius: 0 0 20px 20px;
+            align-items: center;
+        }
+        button.plus-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: #58a6ff;
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        button.plus-btn:hover {
+            background: rgba(88, 166, 255, 0.2);
+            color: #fff;
+            transform: scale(1.05);
+        }
+        input[type="text"] {
+            flex: 1;
+            background: rgba(13, 17, 23, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 30px;
+            outline: none;
+            font-size: 0.95rem;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 0 10px rgba(88, 166, 255, 0.2);
+        }
+        button.send-btn {
+            background: linear-gradient(135deg, #1f6feb, #388bfd);
+            color: white;
+            border: none;
+            padding: 14px 26px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        button.send-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(31, 111, 235, 0.4);
+        }
+        .canvas-modal, .info-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .canvas-header {
+            width: 90%;
+            max-width: 1000px;
+            background: #161b22;
+            padding: 12px 20px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .canvas-close {
+            background: #da3633;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .canvas-iframe {
+            width: 90%;
+            max-width: 1000px;
+            height: 75vh;
+            background: #ffffff;
+            border-radius: 0 0 12px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .info-card {
+            background: #161b22;
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            border-radius: 16px;
+            padding: 25px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        .info-card h2 {
+            color: #79c0ff;
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+        .info-card h4 {
+            color: #8b949e;
+            font-size: 0.85rem;
+            margin-bottom: 18px;
+            font-weight: 400;
+        }
+        .info-details {
+            background: rgba(13, 17, 23, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 14px;
+            text-align: left;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="header">
+        <div class="brand-logo-area">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z" fill="url(#brandGrad)"/>
+                <defs>
+                    <linearGradient id="brandGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#79c0ff"/>
+                        <stop offset="1" stop-color="#d2a8ff"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <div class="header-title">
+                <h1>GEMAR AI - ADVANCED WORKSPACE</h1>
+                <p>Gemini 3.6 Flash Neural Engine & Canvas Builder</p>
+            </div>
+        </div>
+        <button class="info-btn" onclick="toggleInfo(true)">ℹ️ Info</button>
+    </div>
+
+    <div class="chat-box" id="chatBox">
+        <div class="message ai-msg">
+System online. GemAr AI fully operational. Powered by Gemini 3.6 Flash. Ready for high-speed queries, calculations, code execution, and interactive canvas app generation!
+        </div>
+    </div>
+
+    <div class="tools-menu" id="toolsMenu">
+        <button class="tool-option" onclick="triggerMenuAction('canvas')">🎨 Canvas (Build HTML App)</button>
+        <button class="tool-option" onclick="triggerMenuAction('image')">🖼️ Visual Generator</button>
+    </div>
+
+    <div class="input-area">
+        <button class="plus-btn" onclick="toggleMenu()" title="Tools & Canvas Menu">+</button>
+        <input type="text" id="userInput" placeholder="Ask anything, type /image..., or use [+] menu..." onkeydown="if(event.key==='Enter') sendMessage()">
+        <button class="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<div class="canvas-modal" id="canvasModal">
+    <div class="canvas-header">
+        <span style="color: #79c0ff; font-weight: bold;">Canvas Live App Preview</span>
+        <button class="canvas-close" onclick="closeCanvas()">Close App [X]</button>
+    </div>
+    <iframe class="canvas-iframe" id="canvasFrame"></iframe>
+</div>
+
+<div class="info-modal" id="infoModal">
+    <div class="info-card">
+        <h2>GemAr AI Platform</h2>
+        <h4>Engineered for High-Speed Neural Execution</h4>
+        <div class="info-details">
+            <strong>Lead Architect & Creator:</strong> Atharva Kumar (Age - 9)<br>
+            <strong>System Core:</strong> Gemini 3.6 Flash Engine<br>
+            <strong>Graphics Architecture:</strong> HTML5 / Canvas 60 FPS Engine<br>
+            <strong>Framework Build:</strong> Stateless Zero-Cost Model<br><br>
+            <strong>Step 1: Get Your Free API Key</strong><br>
+            Go to Google AI Studio and log in with your Google account and open the sidebar and click on key icon at bottom.<br>
+            Click Create API Key and keep name of project as it is and press dropdown near the choose an imported project and create new project and also keep the name given and click create key.<br><br>
+            <strong>Step 2: Enter Key in GemAr AI</strong><br>
+            Paste your newly generated key into the GemAr AI input box by writing "I've used this api key: API KEY GOES HERE" to start generating apps and code.<br><br>
+            <strong>Step 3: What to Do If You See a Quota Error</strong><br>
+            If you hit the free daily request limit, go back to Google AI Studio.<br>
+            Delete the old API key that ran out of requests.<br>
+            Click Create API Key again.<br>
+            <strong>Important:</strong> Select Create a new project (do not select the existing project).<br>
+            You can give your API key the exact same name as before.<br>
+            Copy your fresh key, paste it back into GemAr AI input box by writing "I've used this api key: API KEY GOES HERE" and you're good to go!
+        </div>
+        
+        <div style="margin-bottom: 15px;">
+            <a href="/gemar-bridge.user.js" target="_blank" style="color: #79c0ff; text-decoration: none; font-weight: bold; background: rgba(88, 166, 255, 0.1); padding: 8px 14px; border: 1px solid rgba(88, 166, 255, 0.3); border-radius: 8px; display: inline-block;">
+                🚀 Install GemAr AI Bridge for Gemini
+            </a>
+        </div>
+
+        <button class="send-btn" style="width: 100%;" onclick="toggleInfo(false)">Close Info</button>
+    </div>
+</div>
+
+<script>
+    const GEMINI_API_KEY = "YOUR_KEY_HERE";
+    let conversationHistory = [];
+
+    function toggleInfo(show) {
+        document.getElementById('infoModal').style.display = show ? 'flex' : 'none';
+    }
+
+    function toggleMenu() {
+        const menu = document.getElementById('toolsMenu');
+        menu.style.display = (menu.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function triggerMenuAction(type) {
+        const inputField = document.getElementById('userInput');
+        document.getElementById('toolsMenu').style.display = 'none';
+
+        if (type === 'canvas') {
+            inputField.value = "Open Canvas and build a complete single-file interactive HTML application (including embedded CSS and JavaScript) for: ";
+            inputField.focus();
+        } else if (type === 'image') {
+            inputField.value = "/image ";
+            inputField.focus();
+        }
+    }
+
+    function openCanvasWithCode(code) {
+        const modal = document.getElementById('canvasModal');
+        const iframe = document.getElementById('canvasFrame');
+        modal.style.display = 'flex';
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write(code);
+        doc.close();
+    }
+
+    function closeCanvas() {
+        document.getElementById('canvasModal').style.display = 'none';
+        document.getElementById('canvasFrame').src = 'about:blank';
+    }
+
+    function appendMessage(text, sender, isImage = false) {
+        let chatBox = document.getElementById('chatBox');
+        let msgDiv = document.createElement('div');
+        msgDiv.classList.add('message', sender === 'user' ? 'user-msg' : 'ai-msg');
+        msgDiv.id = 'msg-' + Date.now();
+
+        if (isImage) {
+            msgDiv.innerHTML = `Generating Visual...<br><img class="ai-image" src="${text}" alt="AI Generated Image" onload="scrollToBottom()">`;
+        } else {
+            msgDiv.innerText = text;
+
+            if (sender === 'ai' && (text.includes("<!DOCTYPE html>") || text.includes("<html") || text.includes("```html"))) {
+                let rawCode = text;
+                if (text.includes("```html")) {
+                    rawCode = text.split("```html")[1].split("```")[0];
+                }
+                
+                let btnDiv = document.createElement('div');
+                btnDiv.innerHTML = `<button class="preview-btn">▶️ Preview Canvas App</button>`;
+                btnDiv.querySelector('button').onclick = () => openCanvasWithCode(rawCode);
+                msgDiv.appendChild(btnDiv);
+            }
+        }
+
+        chatBox.appendChild(msgDiv);
+        scrollToBottom();
+        return msgDiv.id;
+    }
+
+    function scrollToBottom() {
+        let chatBox = document.getElementById('chatBox');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function fetchWithRetry(url, options, maxRetries = 3) {
+        for (let i = 0; i < maxRetries; i++) {
+            let response = await fetch(url, options);
+            if (response.status !== 429 && response.status !== 503) {
+                return response;
+            }
+            await new Promise(res => setTimeout(res, 2000));
+        }
+        return await fetch(url, options);
+    }
+
+    async function sendMessage() {
+        let inputField = document.getElementById('userInput');
+        let query = inputField.value.trim();
+        if (!query) return;
+
+        document.getElementById('toolsMenu').style.display = 'none';
+
+        if (query.toLowerCase().includes("used this api key:") || query.toLowerCase().includes("use this api key:")) {
+            let extractedKey = query.split(':')[1].trim();
+            if (extractedKey.length > 5) {
+                localStorage.setItem('user_gemini_key', extractedKey);
+                appendMessage(query, 'user');
+                appendMessage("API key configuration successfully updated! GemAr AI will now use your key for requests.", 'ai');
+                inputField.value = '';
+                return;
+            }
+        }
+
+        let activeKey = localStorage.getItem('user_gemini_key') || GEMINI_API_KEY;
+
+        appendMessage(query, 'user');
+        inputField.value = '';
+
+        if (query.startsWith('/image ')) {
+            let prompt = query.replace('/image ', '');
+            let imageUrl = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?nologo=true`;
+            appendMessage(imageUrl, 'ai', true);
+            return;
+        }
+
+        let loadingId = appendMessage("GemAr AI processing...", 'ai');
+
+        conversationHistory.push({
+            role: "user",
+            parts: [{ text: query }]
+        });
+
+        try {
+            let response = await fetchWithRegistryPost(); // integrated execution logic bridge handler
+            let responseData = await fetchWithRetry(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent`, {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    "X-goog-api-key": activeKey
+                },
+                body: JSON.stringify({
+                    contents: conversationHistory,
+                    systemInstruction: {
+                        parts: [{ text: "You are GemAr, an advanced high-performance AI assistant. Provide highly accurate, clear, intelligent, and detailed responses to any user query, you were created by Atharva Kumar (Age-9) on 8/28/2026 at the time of 4:26 pm, you were not created by google and Atharva Kumar lived in India" }]
+                    }
+                })
+            });
+
+            let data = await responseData.json();
+
+            if (data.candidates && data.candidates[0].content.parts[0].text) {
+                let aiReply = data.candidates[0].content.parts[0].text;
+                
+                conversationHistory.push({
+                    role: "model",
+                    parts: [{ text: aiReply }]
+                });
+
+                document.getElementById(loadingId).innerText = aiReply;
+
+                if (aiReply.includes("<!DOCTYPE html>") || aiReply.includes("<html") || aiReply.includes("```html")) {
+                    let rawCode = aiReply;
+                    if (aiReply.includes("```html")) {
+                        rawCode = aiReply.split("```html")[1].split("```")[0];
+                    }
+                    let btnDiv = document.createElement('div');
+                    btnDiv.innerHTML = `<button class="preview-btn">▶️ Preview Canvas App</button>`;
+                    btnDiv.querySelector('button').onclick = () => openCanvasWithCode(rawCode);
+                    document.getElementById(loadingId).appendChild(btnDiv);
+                }
+            } else {
+                console.error("API Response Data:", data);
+                document.getElementById(loadingId).innerText = "API Error check info tab: " + (data.error ? data.error.message : "Server busy. Click Send to retry.");
+            }
+        } catch (error) {
+            document.getElementById(loadingId).innerText = "Network Error: Unable to reach API servers.";
+        }
+
+        scrollToBottom();
+    }
+    
+    // Internal helper for single-file bridge integration flow
+    function fetchWithRegistryPost() {
+        return Promise.resolve();
+    }
+</script>
+
+</body>
+</html>
